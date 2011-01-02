@@ -1,5 +1,5 @@
 var assert = require('c-assert')
-  , asserters = require('it/assert')
+  , asserters = require('./assert')
   , log = require('logger')
   , inspect = require('inspect')
   , render = require('render/render2')

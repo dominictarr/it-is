@@ -1,6 +1,6 @@
 //asserters.expresso.js
 
-var asserters = require('it/assert')
+var asserters = require('it-is/assert')
   , log = require('logger')
   , assert = require('assert')
 

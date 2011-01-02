@@ -1,5 +1,5 @@
 
-var it = require('it')
+var it = require('it-is')
   , assert = require('assert')
   , inspect = require('inspect')
   , log = require('logger')
