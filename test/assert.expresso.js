@@ -57,6 +57,10 @@ var examples =
     pass : [ [null], [[]], [{}], [new Error], [function (){}] ]
   , fail : [ [1], [2], [3], ['sadgsdf'] [true], [false], [undefined] ]
   }
+, function : {
+    pass : [ [function(){}], [/asdf/], [Error], [({}).constructor] ]
+  , fail : [ [1], [2], [3], ['sadgsdf'] [true], [false], [undefined] ]
+  }
 , matches : {
     pass : [ ['hello', /\w+/] , ['asdgsadg', /[a|s|d|g]+/] ]
   , fail : [ ['sgfg-', /^\w+$/] ]
@@ -72,7 +76,7 @@ exports ['check examples'] = function (test){
 
 function check(name){
   //check passes
-  examples[name].pass.forEach(function (e){
+  examples[name].pass.forEach(function (e,k){
     asserters[name].apply(null,e)
   })
   //check fails

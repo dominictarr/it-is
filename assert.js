@@ -8,11 +8,11 @@ var assert = require('assert')
 exports = module.exports = {
   typeof: function (actual,expected,message){
     if(expected !== typeof actual)
-      assert.fail(actual, typeof expected, message,'typeof',arguments.callee)
+      assert.fail(typeof expected,actual, (actual + ' typeof ' + expected),'typeof',arguments.callee)
   }
 , instanceof: function (actual,expected,message){
     if(!(actual instanceof expected))
-      assert.fail(actual, expected.name, message,'instanceof',arguments.callee)
+      assert.fail(expected,actual, message,'instanceof',arguments.callee)
   }
 , primitive: function (actual,message){
     if('function' == typeof actual || 'object' == typeof actual) 
@@ -21,8 +21,13 @@ exports = module.exports = {
   }
 , complex: function (actual,message){
     if('function' !== typeof actual && 'object' !== typeof actual) 
-      assert.fail(actual, '(object,function)'
+      assert.fail('(object,function)',actual 
         , message,'complex',arguments.callee)
+  }
+, function: function (actual,message){
+    if('function' !== typeof actual) 
+      assert.fail('function',actual 
+        , message,'should be a',arguments.callee)
   }
 , has: has
 , every: every
@@ -75,6 +80,9 @@ function every (array,func){
 function has(obj,props) {
   var pathTo = []
 
+  assert.ok(obj)
+  assert.ok(props)
+
   try{
     traverser(props,{leaf:leaf, branch: branch})
   } catch (err){
@@ -103,7 +111,7 @@ function has(obj,props) {
 
     var other = path(obj,p.path)
     if('function' !== typeof p.value)
-      exports.typeof(other,typeof p.value)
+      exports.complex(other, other + "should be a type which can have properties") //,typeof p.value)
     p.each()
   }
 }

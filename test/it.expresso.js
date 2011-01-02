@@ -80,6 +80,11 @@ exports ['chained assertions return nice toString()'] = function (test){
   , [ it.ok().ifError().has({ stack: it.typeof('string')} )
     , 'it.ok().ifError().has({ stack: it.typeof("string") })'] 
     //it will need it's own render function.
+    //hmm. lost my place. whats next?
+    //want good error messages.
+    //colour coded error messages.
+    //but maybe should do that by capturing the AssertionError
+    //and then rewriting the error?
   ]
   examples.forEach(function (e){
     var v = e[0].toString()
