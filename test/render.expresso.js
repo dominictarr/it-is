@@ -55,7 +55,7 @@ exports ['nested it.every'] = function (){
     ]).every(it.every(is.typeof('number')))
   } catch(error){
     console.log(error.message)
-    throw error
+//    throw error
   }
 }
 

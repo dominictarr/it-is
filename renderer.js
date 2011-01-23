@@ -37,23 +37,25 @@ module.exports = {
         , 'every' )
     
     function value(v,k,o){
-      var key = o instanceof Array ? '' : k + ': ' 
       if(i == error.index){
-        return style.red(key + style.stringify(v))
         found = true
+        return render.Special(style.red(style.stringify(v)))
       } else if (!found)
-        return style.green(key + style.stringify(v))
+        return render.Special(style.green(style.stringify(v)))
       else  
-        return style.yellow(key + style.stringify(v))
+        return render.Special(style.yellow(style.stringify(v)))
     }
     for(var i in error.every){
-      m.push(value(error.every[i],i,error.every))
+        m[i] = value(error.every[i],i,error.every)
     }
-    var op = '{',cl = '}'
-      if (error.every instanceof Array)
-        op = '[',cl = ']'
 
-    return style.render(op + m.join() + cl,error.message,style.red('every'))
+/*    var op = '{',cl = '}'
+      if (error.every instanceof Array)
+        op = '[',cl = ']'*/
+        
+
+
+    return style.render(style.stringify(m),error.message,style.red('every'))
   }
 /*"it({ a: 1, b: !false! }).!has!({ a: it.typeof("number"), b: it(!false!).!ok!() })"
 "it({ a: 1, b: !false! }).has({ a: it.typeof("number"), b: it(!false!).!ok!() })")*/

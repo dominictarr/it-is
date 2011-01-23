@@ -17,17 +17,18 @@ var colour = {
   }
 ,    red: function (value) { return '' + style(value).red} //is in error
 ,  green: function (value) { return '' + style(value).green } //is okay
-,  yellow: function (value) { return '' + style(value).yellow } //was not checked.
+,  yellow: function (value) { return '' + value } //was not checked.
 , stringify: function (value) { 
   return render 
     ( value
     , { joiner:",\n  "
       , indent: '  '
       , padJoin: ['\n  ','\n']
+      , compactLength: 60
       , string: function (value,p,def){
         if(value.length < 20)
           return JSON.stringify(value)
-        else
+       else
           return '\n' + indent(JSON.stringify(value)) + '\n'
        // return '[\n' + value.split('\n').map(function (e){return JSON.stringify(e)}).join(',\n  ') + '].join(\"\n\")'
       }
