@@ -2,7 +2,6 @@
 var it = require('it-is')
   , assert = require('assert')
   , inspect = require('inspect')
-  , log = require('logger')
 
 exports ['make assertions about an object it(obj)'] = function (test){
   var examples = 
@@ -69,14 +68,13 @@ exports ['chain assertions'] = function (test){
   ]
 }
 
-
 exports ['chained assertions return nice toString()'] = function (test){
 
   var examples = 
   [ [ it.ok(),'it.ok()'] 
   , [ it.ok().ifError(),'it.ok().ifError()'] 
   , [ it.ok(null),'it.ok(null)']
-  , [ it.every([ 1, 2, 3],it.ok()),'it.every([ 1, 2, 3 ]\n ,it.ok())']
+  , [ it.every(it.ok()),'it.every(it.ok())']
   , [ it.ok().ifError().has({ stack: it.typeof('string')} )
     , 'it.ok().ifError().has({ stack: it.typeof("string") })'] 
     //it will need it's own render function.
@@ -88,8 +86,19 @@ exports ['chained assertions return nice toString()'] = function (test){
   ]
   examples.forEach(function (e){
     var v = e[0].toString()
-    log(v)
+    console.log(v)
     test.equal(v,e[1])
   })
 }
+
+/*if there is a failure it should look like this:
+  it(obj).ok()
+would make a message:
+  it(null).ok() 
+  it is not ok
+  (with ok() in red!)
+
+  it(1).equal(2)
+  (1 and equal in red) 2 in green. the method needs to know how to render both actual and expected.
+*/
 

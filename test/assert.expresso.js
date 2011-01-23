@@ -1,7 +1,6 @@
 //asserters.expresso.js
 
 var asserters = require('it-is/assert')
-  , log = require('logger')
   , assert = require('assert')
 
 var a,b,c,d,e
@@ -65,6 +64,20 @@ var examples =
     pass : [ ['hello', /\w+/] , ['asdgsadg', /[a|s|d|g]+/] ]
   , fail : [ ['sgfg-', /^\w+$/] ]
   }
+//like (actual,expected,{case:boolean,whitespace:boolean,quotes:boolean}) //all default to on.
+
+, like : {
+    pass : 
+    [ ['hello\n', 'hello'] 
+    , ['asdgsadg', 'ASDGSADG']
+    , ['"quoted"', "'quoted'"]
+    ]
+  , fail : 
+    [ ['hello\n', 'hello', {whitespace: true}] 
+    , ['asdgsadg', 'ASDGSADG', {case: true}]
+    , ['"quoted"', "'quoted'", {quotes: true}]
+    ]
+  }
 }
 
 exports ['check examples'] = function (test){
@@ -98,7 +111,6 @@ exports ['every'] = function (test){
   })
   test.throws(function(){  
     asserters.every([1,2,'asda',4,5,6],function (x){
-      log('is a number?', x)
       test.ok('number' == typeof x)
     })
   })
