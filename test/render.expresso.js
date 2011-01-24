@@ -12,6 +12,7 @@ exports ['simple'] = function (){
   it([ 
     [null, it.ok(), 'it(!null!).!ok!()'] 
   , [1, it.equal(2), 'it(!1!).!equal!(2)'] 
+  , ['12345', it.like('1\n2\n3\n4\n'), 'it("1234!5!").!like!("1234!!")'] 
   , [2, it.notEqual(2) ,'it(!2!).!notEqual!(2)'] 
   , ['x', it.typeof('number'), 'it(!"x"!).!typeof!(\"number\")'] 
   , [{}, it.instanceof(Array), 'it(!{}!).!instanceof!(Array)'] 
@@ -23,6 +24,12 @@ exports ['simple'] = function (){
   , [ {a: 1, b:false}
     , it.has({a: it.typeof("number"),b: it.ok()})
     , 'it({ a: 1, b: !false! }).!has!({ a: it.typeof("number"), b: it(!false!).!ok!() })' ]
+  , [ {a: 1, b:true }
+    , it.has( {b: false } )
+    , 'it({ a: 1, b: !true! }).!has!({ b: !true! == false})' ]
+  , [ {a: 1, b: {} }
+    , it.has( {b:{c: {} } } )
+    , 'it({a: 1, b: !{}! }).!has!({b:{c: !expected {a: 1, b: {} }! hasPath .b.c}})' ]
   ])
   .every(function checkCorrectErrorMessage(actual){
     var nothrow

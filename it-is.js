@@ -20,7 +20,7 @@ function renderStyle(style) {
   }
 
   function renderer (err,name){
-    return (renderers[name] || renderers['default'])(err,style,name)
+    return (renderers[name] || renderers['default']).call(renderers,err,style,name)
   }
 
   function applyAssertion(actual,assertion,expected,name){

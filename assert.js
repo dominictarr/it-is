@@ -15,12 +15,12 @@ exports = module.exports = {
   }
 , primitive: function (actual,message){
     if('function' == typeof actual || 'object' == typeof actual) 
-      assert.fail(actual, '(number,string,boolean,undefined)'
+      assert.fail(actual, 'must be number, string, boolean, or undefined'
         , message,'primitive',arguments.callee)
   }
 , complex: function (actual,message){
     if('function' !== typeof actual && 'object' !== typeof actual) 
-      assert.fail('(object,function)',actual 
+      assert.fail(actual,'must be object or function' 
         , message,'complex',arguments.callee)
   }
 , function: function (actual,message){
@@ -111,10 +111,11 @@ function every (array,func){
 function has(obj,props) {
   var pathTo = []
 
-  assert.ok(obj)
-  assert.ok(props)
 
   try{
+    assert.ok(obj)
+    assert.ok(props)
+
     traverser(props,{leaf:leaf, branch: branch})
   } catch (err){
       if(!(err instanceof Error) || !err.stack) {
@@ -154,8 +155,8 @@ function path(obj,path,message){
   for(i in path){
     var key = path[i]
     obj = obj[path[i]]
-    if(obj === undefined)
-      assert.ok(false,"expected " + render (object) + "to have a path:" + renderPath(path))
+    if(obj === undefined) 
+      assert.fail("expected " + render(object),renderPath(path),message,"hasPath",arguments.callee)
 //      assert.fail(obj,path,message,'hasPath',path)
 //      throw new Error ("object " + render (obj) + "did not have path:" + render(path))
   }

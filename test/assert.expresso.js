@@ -71,6 +71,7 @@ var examples =
     [ ['hello\n', 'hello'] 
     , ['asdgsadg', 'ASDGSADG']
     , ['"quoted"', "'quoted'"]
+    , ['1234', '1\n2\n3\n4\n']
     ]
   , fail : 
     [ ['hello\n', 'hello', {whitespace: true}] 
