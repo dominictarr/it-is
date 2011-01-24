@@ -3,5 +3,5 @@
 
 ##a terse assertion DSL##
 
-<img src="http://i.imgur.com/goJdO.png" border = "0"/>
+<img src="https://github.com/dominictarr/it-is/raw/master/screenshot.png" border = "0"/>
 
