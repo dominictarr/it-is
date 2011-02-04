@@ -128,6 +128,22 @@ assertion is just a function
       assert.equal(line[0],line[1])
     })
       
+##property##
+
+apply check that it has a property and apply an assertion
+
+    it(actual).property(name,value) //checks that actual[name] == value
+
+or if value is a function:
+    
+    it(actual).property(name,assertion) //checks that assertion(actual[name])
+
+example:
+
+    it([]).property('length',0)
+    
+    it({a: /sdf/}).property('a',it.instanceof(RegExp))
+
 ##has##
 
 apply asssertions to properties of an object, checking that properties and actually there first.

@@ -29,7 +29,8 @@ exports = module.exports = {
         , message,'should be a',arguments.callee)
   }
 , property: function (actual,property,value,message){
-    if(!actual[property] && value == null)//checks that property is defined on actual, even if it is undefined (but not deleted)
+    if(!actual[property] && value == null)
+    //checks that property is defined on actual, even if it is undefined (but not deleted)
       assert.fail(actual , property
         , message,'must have property',arguments.callee)
     //if value is a function, assume it is an assertion... apply it to actual[property]
@@ -84,6 +85,7 @@ exports.__proto__ = assert
 
 //man, prototypal inheritence is WAY better than classical!
 //if only it supported multiple inheritence. that would be awesome.
+
 function throws(tested,checker) {
   try{
     tested()
@@ -123,6 +125,10 @@ function every (array,func){
 
 function has(obj,props) {
   var pathTo = []
+  
+  //traverser has lots og functions, so it needs a longer stack trace.
+  var orig = Error.stackTraceLimit 
+  Error.stackTraceLimit = orig + 20
 
   try{
     assert.ok(obj,"it has no properties!")
@@ -141,6 +147,8 @@ function has(obj,props) {
       err.props = props
       err.object = obj
       err.path = pathTo
+      Error.stackTraceLimit = orig
+
       throw err
   }
   function leaf(p){
@@ -149,7 +157,8 @@ function has(obj,props) {
     if('function' == typeof p.value){
       p.value.call(p.value.parent,other)
     } 
-    else {//since this is the leaf function, it cannot be an object.
+    else {
+    //since this is the leaf function, it cannot be an object.
     assert.equal(other,p.value)
     }
   }

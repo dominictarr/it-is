@@ -9,6 +9,10 @@
   "directories": {
     "lib": "."
   },
+  "dependencies": {
+    "traverser": "0.0.x"
+  , "render": ">=0.0.2"
+  },
   "scripts": {
     "test": "expresso test/*.js"
   },
