@@ -28,6 +28,19 @@ exports = module.exports = {
       assert.fail('function',actual 
         , message,'should be a',arguments.callee)
   }
+, property: function (actual,property,value,message){
+    if(!actual[property] && value == null)//checks that property is defined on actual, even if it is undefined (but not deleted)
+      assert.fail(actual , property
+        , message,'must have property',arguments.callee)
+    //if value is a function, assume it is an assertion... apply it to actual[property]
+    if('function' == typeof value)
+      value(actual[property])
+    else if (value != null) //else if value is exiting, check it's equal to actual[property]
+      exports.equal(actual[property],value, message) 
+      
+    //if you want to assert a value is null or undefined,
+    //use .property(name,it.equal(null|undefined))
+  }
 , has: has
 , every: every
 , throws: throws
@@ -111,9 +124,8 @@ function every (array,func){
 function has(obj,props) {
   var pathTo = []
 
-
   try{
-    assert.ok(obj)
+    assert.ok(obj,"it has no properties!")
     assert.ok(props)
 
     traverser(props,{leaf:leaf, branch: branch})
@@ -137,15 +149,16 @@ function has(obj,props) {
     if('function' == typeof p.value){
       p.value.call(p.value.parent,other)
     } 
-    else //since this is the leaf function, it cannot be an object.
-      assert.equal(other,p.value)
+    else {//since this is the leaf function, it cannot be an object.
+    assert.equal(other,p.value)
+    }
   }
   function branch (p){
     pathTo = p.path
 
     var other = path(obj,p.path)
     if('function' !== typeof p.value)
-      exports.complex(other, other + "should be a type which can have properties") //,typeof p.value)
+      exports.complex(other, other + " should be a type which can have properties, " + render(p.value)) //,typeof p.value)
     p.each()
   }
 }

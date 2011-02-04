@@ -3,6 +3,9 @@
 var asserters = require('it-is/assert')
   , assert = require('assert')
 
+var deleted_a = {a: true}
+delete deleted_a.a
+
 var a,b,c,d,e
 var examples =
 { ok : {
@@ -79,9 +82,13 @@ var examples =
     , ['"quoted"', "'quoted'", {quotes: true}]
     ]
   }
+, property : {
+    pass : [ [{a:true}, 'a'], [[],'length',0], ['hello','length', 5], [{a:1}, 'a', assert.ok ], [{a:null}, 'a', function (actual){assert.equal(actual,null)} ] ]
+  , fail : [ [{}, 'a'], [deleted_a, 'a'], [{a:undefined}, 'a'], ['hello','length', 7] ,[{a:false}, 'a', assert.ok]]
+  }
 }
 
-exports ['check examples'] = function (test){
+exports ['check examples'] = function (){
 //  check('ok')
   for(i in examples){
     check(i)
@@ -106,24 +113,24 @@ function check(name){
   })
 }
   
-exports ['every'] = function (test){
+exports ['every'] = function (){
   asserters.every([1,2,3,4,5,6],function (x){
-    test.ok('number' == typeof x)
+    assert.ok('number' == typeof x)
   })
-  test.throws(function(){  
+  assert.throws(function(){  
     asserters.every([1,2,'asda',4,5,6],function (x){
-      test.ok('number' == typeof x)
+      assert.ok('number' == typeof x)
     })
   })
 }
 
 
-exports ['throws can check what object is thrown'] = function (test){
+exports ['throws can check what object is thrown'] = function (){
 
   var examples = 
   [ [ 'throws', 
       [ function () {throw "HELLO"}
-      , function (thrown) { test.equal(thrown,"HELLO") } ] ]
+      , function (thrown) { assert.equal(thrown,"HELLO") } ] ]
   , [ 'throws', 
       [ function () {throw "HELLO"} ] ]
   ]
@@ -133,7 +140,7 @@ exports ['throws can check what object is thrown'] = function (test){
 }
 
 
-exports ['every intercepts error, records item errored at'] = function (test){
+exports ['every intercepts error, records item errored at'] = function (){
   var examples = 
   [ [ [1,2,3,4,5,null], assert.ok, 5] 
   , [ [null,'sadf','sadfg'], assert.ok, 0] 
@@ -145,12 +152,12 @@ exports ['every intercepts error, records item errored at'] = function (test){
     try {  
       asserters.every(e[0],e[1])
     } catch (err) {
-      test.equal(err.index,e[2])
+      assert.equal(err.index,e[2])
     }
   })
 }
 
-exports ['has intercepts error, records path item errored at'] = function (test){
+exports ['has intercepts error, records path item errored at'] = function (){
 
   var examples = 
   [ [ {a: null}, {a: assert.ok}, ['a']] 
@@ -164,9 +171,9 @@ exports ['has intercepts error, records path item errored at'] = function (test)
     try {  
       asserters.has(e[0],e[1])
     } catch (err) {
-      return test.deepEqual(err.path,e[2])
+      return assert.deepEqual(err.path,e[2])
     }
-    test.ok(false,"expected has to throw error at path " + inspect(e[2]))
+    assert.ok(false,"expected has to throw error at path " + inspect(e[2]))
   })
 
 }

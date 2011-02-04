@@ -30,6 +30,9 @@ exports ['simple'] = function (){
   , [ {a: 1, b: {} }
     , it.has( {b:{c: {} } } )
     , 'it({a: 1, b: !{}! }).!has!({b:{c: !expected {a: 1, b: {} }! hasPath .b.c}})' ]
+  , [ undefined
+    , it.has( {} )
+    , 'it(!undefined!).!has!(ERROR: it has no properties!)' ] //this won't pass but i'll fix it later XXX
   ])
   .every(function checkCorrectErrorMessage(actual){
     var nothrow
@@ -62,18 +65,5 @@ exports ['nested it.every'] = function (){
     ]).every(it.every(is.typeof('number')))
   } catch(error){
     console.log(error.message)
-//    throw error
   }
 }
-
-/*
-  set mode: ascii, coloured,
-  
-  indentation.
-  
-  add stringCompare assertions,
-    like (ignore whitespace, capitalization and "/')
-    like (actual,expected,respectCase,respectQuotes,respectColours)
-
-
-*/

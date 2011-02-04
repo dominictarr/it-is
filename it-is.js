@@ -9,6 +9,7 @@ function renderStyle(style) {
 
   if('string' === typeof style)
     style = styles[style] || styles.colour
+
   module.exports = It
 
   function merge(a,b){
@@ -25,7 +26,7 @@ function renderStyle(style) {
 
   function applyAssertion(actual,assertion,expected,name){
     try{
-      assertion.apply(null,merge(actual,expected)) //call the assertion.
+      assertion.apply(null, merge(actual,expected)) //call the assertion.
     } catch (err){
       var m = renderer(err,name)
       if(!err.originalStack){
@@ -134,7 +135,7 @@ function renderStyle(style) {
 
   function renderIt(i){
     return render(i, {value: function (v,p,def){
-        if(v.name == 'AssertionList')
+        if(v && v.name == 'AssertionList')
           return v.toString()
         return def(v,p)
       } } )

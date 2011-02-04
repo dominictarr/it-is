@@ -154,3 +154,5 @@ example:
 
 
 enjoy!
+
+next, implement and document how to add assertion functions and renderers and render styles.

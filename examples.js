@@ -1,6 +1,6 @@
 var it = require('it-is') //defaults to colour
 
-exports = module.exports = 
+var assertions = 
   { 'numbers': 
       "it(10000).equal(10001)"
 
@@ -26,23 +26,18 @@ exports = module.exports =
       "it({a: 1, b: {} }).has( {b:{c: {} } } )"
 
   }
-
-
-
     
 
-if(require.main == module)
-  for (var i in exports){
-    Error.stackTraceLimit = 1
-    try{
-      eval(exports[i])
-    } catch (error){
+for (var i in exports){
+  Error.stackTraceLimit = 1
+  try{
+    eval(assertions[i])
+  } catch (error){
 
-      console.log("> " + exports[i])
-      console.log()
-      console.log(error.stack)
-      console.log()
-    }
+    console.log("> " + exports[i])
+    console.log()
+    console.log(error.stack)
+    console.log()
   }
 
 

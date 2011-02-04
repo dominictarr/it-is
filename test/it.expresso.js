@@ -3,7 +3,7 @@ var it = require('it-is')
   , assert = require('assert')
   , inspect = require('inspect')
 
-exports ['make assertions about an object it(obj)'] = function (test){
+exports ['make assertions about an object it(obj)'] = function (){
   var examples = 
   [ [ function (){ it(1).equal(1) } ,  true]  
   , [ function (){ it(0).equal(1) } ,  false]  
@@ -31,7 +31,7 @@ function mightThrow(func,args,shouldPass){
 }
 
 
-exports ['make a asserting function with it.assertion(expected)'] = function (test){
+exports ['make a asserting function with it.assertion(expected)'] = function (){
   var pass = true
     , fail = false
   var examples = 
@@ -60,7 +60,7 @@ exports ['make a asserting function with it.assertion(expected)'] = function (te
 }
 
 
-exports ['chain assertions'] = function (test){
+exports ['chain assertions'] = function (){
   var pass = true, fail = false
   var examples = 
   [ [1, it.equal(1).typeof('number').ok(), pass]
@@ -68,7 +68,7 @@ exports ['chain assertions'] = function (test){
   ]
 }
 
-exports ['chained assertions return nice toString()'] = function (test){
+exports ['chained assertions return nice toString()'] = function (){
 
   var examples = 
   [ [ it.ok(),'it.ok()'] 
@@ -87,7 +87,7 @@ exports ['chained assertions return nice toString()'] = function (test){
   examples.forEach(function (e){
     var v = e[0].toString()
     console.log(v)
-    test.equal(v,e[1])
+    assert.equal(v,e[1])
   })
 }
 

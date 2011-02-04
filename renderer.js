@@ -1,16 +1,9 @@
 //renderer.js
 
-/*
-
-it = require('it-is')
-it(null).ok()
-*/
-
 var render = require('render')
   , log = require('logger')
   , trees = require('trees/trees')
   , assert = require('assert')
-//  , style = require('./style').ascii
 
 function pathTo(obj,path){
   for(var i in path)
@@ -79,10 +72,15 @@ module.exports = {
 
     return style.render(style.stringify(m),error.message,style.red('every'))
   }
-/*"it({ a: 1, b: !false! }).!has!({ a: it.typeof("number"), b: it(!false!).!ok!() })"
-"it({ a: 1, b: !false! }).has({ a: it.typeof("number"), b: it(!false!).!ok!() })")*/
 
 , has: function (error,style){
+  if(error.object == null)
+    return style.render
+      ( style.red(object)
+      , "ERROR: it has no properties!"
+      , style.red('has') )
+
+
     var props = trees.copy(error.props)
       , object = trees.copy(error.object)
       , parentPath = trees.copy(error.path)
@@ -91,7 +89,9 @@ module.exports = {
 
     pathTo(props,parentPath)[key] = render.Special(errorMessage(error,style)) //Special makes render not stringify (no ""'s)
     var last = found.path.pop()
-    pathTo(object,found.path)[last] = render.Special(style.red(style.stringify(found.value)))
+    var at = pathTo(object,found.path)
+    if(at)
+      at[last] = render.Special(style.red(style.stringify(found.value)))
 
     //also, need propper indentation so it's readable.
     //and make red() configurable, so it can term-colour, or ascii only.
