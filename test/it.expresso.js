@@ -1,7 +1,7 @@
 
 var it = require('it-is')
   , assert = require('assert')
-  , inspect = require('inspect')
+  , inspect = require('sys').inspect
 
 exports ['make assertions about an object it(obj)'] = function (){
   var examples = 

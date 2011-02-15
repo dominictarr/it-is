@@ -8,8 +8,8 @@ var it, is = it = require('it-is')
 
 exports ['simple'] = function (){
   
-  function renderIt(it,enforce){
-  it([ 
+  function renderIt(it,it2,enforce){
+  it2([ 
     [null, it.ok(), 'it(!null!).!ok!()'] 
   , [1, it.equal(2), 'it(!1!).!equal!(2)'] 
   , ['12345', it.like('1\n2\n3\n4\n'), 'it("1234!5!").!like!("1234!!")'] 
@@ -32,7 +32,10 @@ exports ['simple'] = function (){
     , 'it({a: 1, b: !{}! }).!has!({b:{c: !expected {a: 1, b: {} }! hasPath .b.c}})' ]
   , [ undefined
     , it.has( {} )
-    , 'it(!undefined!).!has!(ERROR: it has no properties!)' ] //this won't pass but i'll fix it later XXX
+    , 'it(!undefined!).!has!(ERROR: it has no properties!)' ]
+  , [ {a:true}
+    , it.has( {b: true} )
+    , 'it(!{a:true}!).!has!({b: !expected{a:true}! haspath .b })' ]
   ])
   .every(function checkCorrectErrorMessage(actual){
     var nothrow
@@ -42,7 +45,7 @@ exports ['simple'] = function (){
     } catch (exp){
       log(exp.message)
       if(enforce)
-        it(exp.message).like(actual[2])
+        it2(exp.message).like(actual[2])
       else
         return
     }
@@ -52,8 +55,8 @@ exports ['simple'] = function (){
   
   }
   
-  renderIt(it_ascii,true) //ascii, check for errors
-  renderIt(it) //colour, log to terminal to check.
+  renderIt(it_ascii,it,true) //ascii, check for errors
+  renderIt(it,it) //colour, log to terminal to check.
   
 }
 

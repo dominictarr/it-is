@@ -1,8 +1,7 @@
 //renderer.js
 
 var render = require('render')
-  , log = require('logger')
-  , trees = require('trees/trees')
+  , trees = require('trees')
   , assert = require('assert')
 
 function pathTo(obj,path){
@@ -88,11 +87,16 @@ module.exports = {
       , found = pathToEnd(error.object,error.path) //
 
     pathTo(props,parentPath)[key] = render.Special(errorMessage(error,style)) //Special makes render not stringify (no ""'s)
+
     var last = found.path.pop()
     var at = pathTo(object,found.path)
-    if(at)
-      at[last] = render.Special(style.red(style.stringify(found.value)))
-
+    if(at){
+      if(last)
+        at[last] = render.Special(style.red(style.stringify(found.value)))
+      else
+        object = render.Special(style.red(style.stringify(at)))
+      
+    }
     //also, need propper indentation so it's readable.
     //and make red() configurable, so it can term-colour, or ascii only.
     //shift render code out into another module 
