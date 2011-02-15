@@ -167,7 +167,7 @@ function has(obj,props) {
 
     var other = path(obj,p.path)
     if('function' !== typeof p.value)
-      exports.complex(other, other + " should be a type which can have properties, " + render(p.value)) //,typeof p.value)
+      exports.complex(other, other + " should be a type which can have properties") //,typeof p.value)
     p.each()
   }
 }
