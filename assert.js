@@ -114,8 +114,6 @@ function every (array,func){
         n.thrownValue = err
         err = n
       }
-//      err.stack = //bad way. stack is a getter.
-//        "it/asserters.every intercepted error at item[" + render(i) + "]\n" + err.stack
       err.every = array
       err.index = i
       throw err
@@ -167,7 +165,7 @@ function has(obj,props) {
 
     var other = path(obj,p.path)
     if('function' !== typeof p.value)
-      exports.complex(other, other + " should be a type which can have properties") //,typeof p.value)
+      exports.complex(other, other + " should be a type which can have properties")
     p.each()
   }
 }
@@ -179,8 +177,6 @@ function path(obj,path,message){
     obj = obj[path[i]]
     if(obj === undefined) 
       assert.fail("expected " + render(object),renderPath(path),message,"hasPath",arguments.callee)
-//      assert.fail(obj,path,message,'hasPath',path)
-//      throw new Error ("object " + render (obj) + "did not have path:" + render(path))
   }
   return obj
 }
