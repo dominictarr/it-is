@@ -1,6 +1,6 @@
 //render.expresso.js
 
-var it, is = it = require('it-is')
+var it, is = it = require('../it-is')
   , it_ascii = it.renderStyle('ascii')
   , log = console.log
 

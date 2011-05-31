@@ -1,14 +1,18 @@
 var asserters = require('./assert')
-  , renderers = require('./renderer')
   , render = require('render')
-  , styles = require('./styles')
 
-module.exports = renderStyle(styles.colour)
+module.exports = renderStyle(null /*styles.colour*/) //now default to no style.
 
 function renderStyle(style) {
+  var renderers
+
+  if(style){
+   renderers = require('./renderer')
+    , styles = require('./styles')
 
   if('string' === typeof style)
     style = styles[style] || styles.colour
+  }
 
   module.exports = It
 
@@ -28,17 +32,19 @@ function renderStyle(style) {
     try{
       assertion.apply(null, merge(actual,expected)) //call the assertion.
     } catch (err){
-      var m = renderer(err,name)
-      if(!err.originalStack){
-        err.message = undefined
-        var stack = err.stack
-        err.originalStack = err.stack
-        Object.defineProperty(err,'stack',{
-          get: function (){return err.message + '\n' + err.originalStack}
-        })
-      }
-      err.message = m
 
+      if(style){//don't apply message rendering if renderStyle is null
+        var m = renderer(err,name)
+        if(!err.originalStack){
+          err.message = undefined
+          var stack = err.stack
+          err.originalStack = err.stack
+          Object.defineProperty(err,'stack',{
+            get: function (){return err.message + '\n' + err.originalStack}
+          })
+        }
+        err.message = m
+      }
       throw err  
     }
   }
@@ -60,18 +66,21 @@ function renderStyle(style) {
     }
   }
 
-
-  var asserts = It.__proto__ = It.prototype = {}
+  var asserts = It.prototype = It
 
   //add all the standard assert methods.
 
   for(i in asserters) {
-    asserts[i] = asserter(asserters[i],i)
+    It[i] = asserter(asserters[i],i)
   }
 
   function asserter(func,name){
     return function (){
-      return this.assertion(name,func,arguments/*,renderer*/)  
+      //for(var i in arguments) you cannot do this over arguments in firefox.
+      var a = []
+      while (arguments.length) 
+        {a.push([].shift.call(arguments))};
+      return this.assertion(name,func,a/*,renderer*/)  
     }
   }
 
@@ -94,34 +103,23 @@ function renderStyle(style) {
    * then teach it how to be a function again (apply and call)
   */
 
-  function fakeFunction (proto){ 
-    var fake =
-    { apply: function (self,args){
-        Function.apply.apply(this,[self,args])
-      }  
-    , call: function (){
-        Function.call.apply(this,arguments)
-      }
-    }
-    fake.__proto__ = proto
-    return fake
-  }
-
   It.assertion = function (name,func,args){
     var assertions = [[func,args,name]]
       , self = AssertionList
 
-     AssertionList.assertion = function (name,func,args){
-       assertions.push([func,args,name])
-       return AssertionList
-     } 
+    AssertionList.assertion = function (name,func,args){
+      assertions.push([func,args,name])
+      return AssertionList
+    }
 
-    AssertionList.__proto__ = fakeFunction(asserts)
     AssertionList.toString = function (){
         var r =  "it" + assertions.map(function (e){
           return '.' + e[2] + '(' + renderArgs(e[1]) + ')'
         }).join('')
         return r
+    }
+    for(i in asserters) {
+      AssertionList[i] = asserter(asserters[i],i)
     }
 
     return AssertionList
@@ -149,6 +147,7 @@ function renderStyle(style) {
     return l.join('\n ,')
   }
 
-It.renderStyle = renderStyle
+  It.renderStyle = renderStyle
+  It.style = renderStyle
 return It
 }

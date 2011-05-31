@@ -1,6 +1,6 @@
 //asserters.expresso.js
 
-var asserters = require('it-is/assert')
+var asserters = require('../assert')
   , assert = require('assert')
 
 var deleted_a = {a: true}

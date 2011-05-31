@@ -1,5 +1,5 @@
 
-var it = require('it-is')
+var it = require('../it-is')
   , assert = require('assert')
   , inspect = require('sys').inspect
 
@@ -27,7 +27,7 @@ function mightThrow(func,args,shouldPass){
     assert.equal 
       ( shouldPass, true
       , "expected " + func 
-        + ' to throw, with args:' + inspect(args) )
+        + ' to throw, with args:' + JSON.stringify(args) )
 }
 
 
@@ -66,39 +66,8 @@ exports ['chain assertions'] = function (){
   [ [1, it.equal(1).typeof('number').ok(), pass]
   , [true, it.ok().equal(1).strictEqual(true).notStrictEqual(1), pass ]
   ]
-}
-
-exports ['chained assertions return nice toString()'] = function (){
-
-  var examples = 
-  [ [ it.ok(),'it.ok()'] 
-  , [ it.ok().ifError(),'it.ok().ifError()'] 
-  , [ it.ok(null),'it.ok(null)']
-  , [ it.every(it.ok()),'it.every(it.ok())']
-  , [ it.ok().ifError().has({ stack: it.typeof('string')} )
-    , 'it.ok().ifError().has({ stack: it.typeof("string") })'] 
-    //it will need it's own render function.
-    //hmm. lost my place. whats next?
-    //want good error messages.
-    //colour coded error messages.
-    //but maybe should do that by capturing the AssertionError
-    //and then rewriting the error?
-  ]
   examples.forEach(function (e){
-    var v = e[0].toString()
-    console.log(v)
-    assert.equal(v,e[1])
+    mightThrow(e[1],e[0],e[2])
   })
 }
-
-/*if there is a failure it should look like this:
-  it(obj).ok()
-would make a message:
-  it(null).ok() 
-  it is not ok
-  (with ok() in red!)
-
-  it(1).equal(2)
-  (1 and equal in red) 2 in green. the method needs to know how to render both actual and expected.
-*/
 

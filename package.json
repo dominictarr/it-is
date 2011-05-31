@@ -1,17 +1,19 @@
 {
   "name": "it-is",
   "description": "terse functional assertion framework",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "http://github.com/dominictarr/it-is",
   "repository": "git://github.com/dominictarr/it-is.git",
   "author": "Dominic Tarr <dominic.tarr@gmail.com>",
-  "main": "it-is",
+  "main": "./it-is.js",
   "directories": {
     "lib": "."
   },
   "dependencies": {
     "traverser": "0.0.x"
-  , "render": ">=0.0.2"
+  , "render": ">= 0.0.2"
+  , "trees": "0.0.x"
+  , "style": "0.1.x"
   },
   "devDependencies": {
     "expresso": ">=0.6.0"
