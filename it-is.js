@@ -1,4 +1,4 @@
-var asserters = require('./assert')
+var asserters = require('assertions')
   , render = require('render')
 
 module.exports = renderStyle(null /*styles.colour*/) //now default to no style.
@@ -118,6 +118,7 @@ function renderStyle(style) {
         }).join('')
         return r
     }
+
     for(i in asserters) {
       AssertionList[i] = asserter(asserters[i],i)
     }

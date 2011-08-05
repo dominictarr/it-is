@@ -12,6 +12,7 @@
   "dependencies": {
     "traverser": "0.0.x"
   , "render": ">= 0.0.2"
+  , "assertions": "*"
   , "trees": "0.0.x"
   , "style": "0.1.x"
   },
