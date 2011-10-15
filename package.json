@@ -1,7 +1,7 @@
 {
   "name": "it-is",
   "description": "terse functional assertion framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "http://github.com/dominictarr/it-is",
   "repository": "git://github.com/dominictarr/it-is.git",
   "author": "Dominic Tarr <dominic.tarr@gmail.com>",
@@ -12,7 +12,7 @@
   "dependencies": {
     "traverser": "0.0.x"
   , "render": ">= 0.0.2"
-  , "assertions": "*"
+  , "assertions": "~1.0"
   , "trees": "0.0.x"
   , "style": "0.1.x"
   },
