@@ -3,7 +3,7 @@
 var traverser = require('traverser')
 //  , style = require('color')
   , style = require('style')
-  , inspect = require ('sys').inspect
+  , inspect = require('util').inspect
 /*var styles = 
     { red : style().red.styler
     , green: style().green.styler }

@@ -2,22 +2,22 @@
 
 <img src="http://i.imgur.com/goJdO.png" border = "0"/>
 
-       var sys = require('sys');
+       var util = require('util');
        var style = require('style');
 
-       sys.puts(style('hello').green); // outputs green text
-       sys.puts(style('i like cake and pies').underline.red) // outputs red underlined text
-       sys.puts(style('inverse the color').inverse); // inverses the color
-       sys.puts(style('OMG Rainbows!').rainbow); // rainbow (ignores spaces)
+       util.puts(style('hello').green); // outputs green text
+       util.puts(style('i like cake and pies').underline.red) // outputs red underlined text
+       util.puts(style('inverse the color').inverse); // inverses the color
+       util.puts(style('OMG Rainbows!').rainbow); // rainbow (ignores spaces)
        
 ##disable style, for plain output
        
        style = require('style').enable(false) //... which you may want to do at some point!
        
-       sys.puts(style('hello').green); // plain text
-       sys.puts(style('i like cake and pies').underline.red) // plain text
-       sys.puts(style('inverse the color').inverse); // plain text
-       sys.puts(style('OMG Rainbows!').rainbow); // plain text
+       util.puts(style('hello').green); // plain text
+       util.puts(style('i like cake and pies').underline.red) // plain text
+       util.puts(style('inverse the color').inverse); // plain text
+       util.puts(style('OMG Rainbows!').rainbow); // plain text
        
        //ALSO: does not monkeypatch string with 13 new properties!
        
